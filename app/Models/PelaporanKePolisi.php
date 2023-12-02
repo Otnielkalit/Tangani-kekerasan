@@ -8,4 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class PelaporanKePolisi extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'user_id',
+        'judul_pelaporan',
+        'isi_laporan',
+        'visibility',
+        'file_path',
+        'gambar',
+        'pengaduan',
+        'tanggal_kejadian',
+        'lokasi_kejadian',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
