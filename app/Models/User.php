@@ -28,11 +28,15 @@ class User extends Authenticatable
         'foto_profil',
     ];
 
-    public function pelaporanMasyarakat()
+    public function pelaporanMasyarakatKeDinas()
     {
         return $this->hasMany(PelaporanKeDinas::class);
     }
 
+    public function pelaporanMasyarakatKePolisi()
+    {
+        return $this->hasMany(PelaporanKePolisi::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

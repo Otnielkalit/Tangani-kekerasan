@@ -59,6 +59,7 @@ namespace App\Models{
  * @property string $lokasi_kejadian
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|PelaporanKePolisi newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PelaporanKePolisi newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PelaporanKePolisi query()
@@ -132,8 +133,10 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PelaporanKeDinas> $pelaporanMasyarakat
- * @property-read int|null $pelaporan_masyarakat_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PelaporanKeDinas> $pelaporanMasyarakatKeDinas
+ * @property-read int|null $pelaporan_masyarakat_ke_dinas_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PelaporanKePolisi> $pelaporanMasyarakatKePolisi
+ * @property-read int|null $pelaporan_masyarakat_ke_polisi_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
