@@ -19,16 +19,11 @@ class PelaporanKeDinasController extends Controller
     public function index()
     {
         try {
-            // Ambil semua data pelaporan dari database
             $laporan = PelaporanKeDinas::all();
-
-            // Memberikan respons dengan data laporan
             return response()->json(['data' => $laporan], 200);
         } catch (\Exception $e) {
             // Log pesan kesalahan
             Log::error($e->getMessage());
-
-            // Memberikan respons dengan pesan kesalahan
             return response()->json(['message' => 'Terjadi kesalahan saat mengambil data pelaporan'], 500);
         }
     }
@@ -46,7 +41,6 @@ class PelaporanKeDinasController extends Controller
     public function store(Request $request)
     {
         try {
-            // Validasi data yang diterima dari request
             $validatedData = $request->validate([
                 'judul_pelaporan' => 'required|string',
                 'isi_laporan' => 'required|string',
@@ -55,19 +49,10 @@ class PelaporanKeDinasController extends Controller
                 'lokasi_kejadian' => 'required|string',
                 'file' => 'nullable|mimes:pdf,doc,docx|max:2048',
                 'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-                // tambahkan aturan validasi lainnya sesuai kebutuhan
             ]);
-
-            // Ubah format tanggal menjadi 'YYYY-MM-DD'
             $tanggal_kejadian = Carbon::parse($validatedData['tanggal_kejadian'])->format('Y-m-d');
-
-            // Menyimpan file jika ada
             $file_path = $request->file('file') ? $request->file('file')->store('files', 'public') : null;
-
-            // Menyimpan gambar jika ada
             $gambar = $request->file('gambar') ? $request->file('gambar')->store('images', 'public') : null;
-
-            // Membuat entri baru dalam database
             $pelaporan = PelaporanKeDinas::create([
                 'user_id' => auth()->id(),
                 'judul_pelaporan' => $validatedData['judul_pelaporan'],
@@ -75,17 +60,12 @@ class PelaporanKeDinasController extends Controller
                 'visibility' => $validatedData['visibility'],
                 'file_path' => $file_path,
                 'gambar' => $gambar,
-                'tanggal_kejadian' => $tanggal_kejadian, // Gunakan format yang valid
+                'tanggal_kejadian' => $tanggal_kejadian,
                 'lokasi_kejadian' => $validatedData['lokasi_kejadian'],
             ]);
-
-            // Memberikan respons dengan data pelaporan yang baru dibuat
             return response()->json(['message' => 'Pelaporan berhasil disimpan', 'data' => $pelaporan], 201);
         } catch (\Exception $e) {
-            // Log pesan kesalahan
             Log::error($e->getMessage());
-
-            // Memberikan respons dengan pesan kesalahan
             return response()->json(['message' => 'Terjadi kesalahan saat menyimpan pelaporan'], 500);
         }
     }
@@ -96,21 +76,13 @@ class PelaporanKeDinasController extends Controller
     public function show($id)
     {
         try {
-            // Cari laporan berdasarkan ID
             $laporan = PelaporanKeDinas::find($id);
-
-            // Periksa apakah laporan ditemukan
             if (!$laporan) {
                 return response()->json(['message' => 'Laporan tidak ditemukan'], 404);
             }
-
-            // Memberikan respons dengan data laporan
             return response()->json(['data' => $laporan], 200);
         } catch (\Exception $e) {
-            // Log pesan kesalahan
             Log::error($e->getMessage());
-
-            // Memberikan respons dengan pesan kesalahan
             return response()->json(['message' => 'Terjadi kesalahan saat mengambil detail laporan'], 500);
         }
     }
