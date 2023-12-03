@@ -8,6 +8,7 @@ use App\Models\PelaporanKePolisi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class PelaporanKePolisiController extends Controller
 {
@@ -116,8 +117,17 @@ class PelaporanKePolisiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(c $c)
+    public function destroy($id)
     {
-        //
+
+        $pelaporan = PelaporanKePolisi::findOrFail($id);
+        if ($pelaporan->file_path) {
+            Storage::disk('public')->delete($pelaporan->file_path);
+        }
+        if ($pelaporan->gambar) {
+            Storage::disk('public')->delete($pelaporan->gambar);
+        }
+        $pelaporan->delete();
+        return response()->json(['message' => 'Laporan berhasil dihapus'], 200);
     }
 }
