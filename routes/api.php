@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BerandaAdminController;
 use App\Http\Controllers\BerandaSuperAdminController;
 use App\Http\Controllers\Masyarakat\PelaporanKeDinasController;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('login', [LoginController::class, 'loginApi']);
+Route::post('register', [RegisterController::class, 'registerApi']);
 Route::resource('pelaporan-masyarakat-ke-dinas', PelaporanKeDinasController::class)->middleware('auth:sanctum');
 Route::resource('pelaporan-masyarakat-ke-polisi', PelaporanKePolisiController::class)->middleware('auth:sanctum');
 
